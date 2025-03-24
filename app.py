@@ -29,14 +29,14 @@ def sendmail(mail, otp):
 def sendmail(mail, otp):
     print("mail sent")
 
-def save1(username, email, password1):
+def save1(username, email, password1, category):
     try:
         db=mc.connect(host="localhost",user="user",password="your password")
         if (db.is_connected()):
             print('DATABASE CONNECTED SUCCESSFULLY')
             cursor=db.cursor()
             cursor.execute("use lj;")
-            query="insert into tempData (uname,mail,pwd) values ('{}','{}','{}')".format(username,email,password1)
+            query="insert into tempData (uname,mail,pwd,category) values ('{}','{}','{}','{}')".format(username,email,password1,category)
             cursor.execute(query)
             db.commit()
             db.close()
@@ -59,8 +59,7 @@ def save2(email):
                 for j in i:
                     b.append(j)
             
-            x = 'x'
-            query="insert into data (uname,mail,pwd,type) values ('{}','{}','{}','{}')".format(b[0],b[1],b[2],x)
+            query="insert into data (uname,mail,pwd,type) values ('{}','{}','{}','{}')".format(b[0],b[1],b[2],b[3])
             cursor.execute(query)
             cursor.execute("delete from tempData where email='{}'".format(email))
             db.commit()
@@ -101,9 +100,10 @@ def register():
         email = data.get('email')
         password1 = data.get('password1')
         og_otp = str(data.get('og_otp'))
+        category = data.get('category')
         print(f"Received") #print to the console for debugging.
         sendmail(email, og_otp)
-        save1(username, email, password1)
+        save1(username, email, password1, category)
         print("Received2")
         return jsonify({'message': 'Data received'})
     except Exception as e:
