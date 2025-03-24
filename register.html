@@ -13,8 +13,6 @@
         <label for="email">E-mail:</label><br>
         <input type="text" id="email" name="email"><br><br>
 
-        <button type="button" onclick="verify()">Verify</button><br><br>
-
         <label for="password1">Password:</label><br>
         <input type="password" id="password1" name="password1"><br>
 
@@ -22,10 +20,17 @@
         <input type="password" id="password2" name="password2"><br><br>
 
         <button type="reset">Reset</button>
-        <button type="button" onclick="register()">Register</button>
+        <button type="button" onclick="register()">Register</button><br><br>
         
     </form>
+    <script>
+        window.onload = function(){
+            const email = document.getElementById("email").value;
+            localStorage.setItem("email",email);
+        }
+    </script>
 
     <script src="script.js"></script>
+
 </body>
 </html>
