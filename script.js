@@ -39,21 +39,23 @@ function register() {
     const email = document.getElementById('email').value;
     const password1 = document.getElementById('password1').value;
     const password2 = document.getElementById('password2').value;
+    const category = document.getElementById('category').value;
     window.onload = function(){
         const email = document.getElementById("email").value;
         localStorage.setItem("email",email);
     }
     if(password1 == password2) {
-        processRegister(username, email, password1);
+        processRegister(username, email, password1, category);
     } else {
         alert("Passwords not matching");
     }
 }
 
-function processRegister(username, email, password1){
+function processRegister(username, email, password1, category){
     console.log("username:", username);
     console.log("email:", email);
     console.log("password:", password1);
+    console.log("category:", category);
     // var og_otp = 54321;
     // sendEmail();
     
@@ -62,6 +64,7 @@ function processRegister(username, email, password1){
         email: email,
         password1: password1,
         og_otp: og_otp,
+        category: category,
     };
     fetch('http://127.0.0.1:5000/register', { // Replace '/submit' with your Python backend endpoint
         method: 'POST',
