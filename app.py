@@ -69,6 +69,29 @@ def save2(email):
     except Exception as e:
         print(f"Error processing request: {e}")
 
+def search(username, password1):
+    try:
+        db=mc.connect(host="localhost",user="user",password="password")
+        flag = 0
+        if (db.is_connected()):
+            print('DATABASE CONNECTED SUCCESSFULLY')
+            cursor=db.cursor()
+            cursor.execute("use lj;")
+            query="select pwd from data where uname='{}';".format(username)
+            cursor.execute(query)
+            a=cursor.fetchall()[1][0]
+            print(a)
+            if a == password1:
+                flag = 1
+            db.commit()
+            db.close()
+            # return flag
+            if flag == 1:
+                print(f"Found")
+            
+    except Exception as e:
+        print(f"Error processing request: {e}")
+
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -95,6 +118,19 @@ def verify():
         email = data.get('email')
         save2(email)
         return jsonify({'message': 'Data received'})
+    except Exception as e:
+        print(f"Error processing request: {e}")
+        return jsonify({'error': str(e), 'message':'An error occurred on the server.'}), 500 #return an error code and message.
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    try:
+        data = request.get_json()
+        username = data.get('username')
+        password1 = data.get('password1')
+        search(username, password1)
+        return jsonify({'message': 'Signed In'})
     except Exception as e:
         print(f"Error processing request: {e}")
         return jsonify({'error': str(e), 'message':'An error occurred on the server.'}), 500 #return an error code and message.

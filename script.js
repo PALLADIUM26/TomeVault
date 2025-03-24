@@ -6,9 +6,32 @@ function login() {
     processLogin(username, password);
 }
 
-function processLogin(username, password){
+function processLogin(username, password1){
     console.log("username:", username);
-    console.log("password:", password);
+    console.log("password:", password1);
+    const data = {
+        username: username,
+        password1: password1,
+    };
+    fetch('http://127.0.0.1:5000/login', { // Replace '/submit' with your Python backend endpoint
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json()) // Assuming your Python backend returns JSON
+    .then(responseData => {
+        console.log('Success:', responseData);
+        // Handle the response from the Python backend (e.g., display a message)
+        alert(responseData.message); // Example: Display a message from the backend
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert("An error occurred. See console for details."); //Alert the user of an error.
+    });
+    location.href = "studentHome.html";
+    // location.replace("verify.html?"+email);
 }
 
 function register() {
