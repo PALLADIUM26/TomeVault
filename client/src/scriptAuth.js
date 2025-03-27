@@ -25,12 +25,17 @@ function processLogin(username, password1){
         console.log('Success:', responseData);
         // Handle the response from the Python backend (e.g., display a message)
         alert(responseData.message); // Example: Display a message from the backend
+        if(responseData.message == 'a')
+            location.href = "homeAdmin.html";
+        else if(responseData.message == 'l')
+            location.href = "homeLibra.html";
+        else if(responseData.message == 's')
+            location.href = "homeStud.html";
     })
     .catch((error) => {
         console.error('Error:', error);
         alert("An error occurred. See console for details."); //Alert the user of an error.
     });
-    location.href = "homeAdmin.html";
     // location.replace("verify.html?"+email);
 }
 
