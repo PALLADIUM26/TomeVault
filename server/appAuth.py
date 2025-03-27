@@ -28,9 +28,6 @@ def sendmail(mail, otp):
 def save1(username, email, password1, category):
     val1 = os.environ['dbUser']
     val2 = os.environ['dbPwd']
-    val1 = "root"
-    val2 = "lolwa"
-    print("testing")
     try:
         db=mc.connect(host="localhost",user=val1,password=val2)
         if (db.is_connected()):
@@ -80,16 +77,20 @@ def search(username, password1):
             print('DATABASE CONNECTED SUCCESSFULLY')
             cursor=db.cursor()
             cursor.execute("use lj;")
-            query="select pwd from data where uname='{}';".format(username)
+            query="select pwd,type from data where uname='{}';".format(username)
             cursor.execute(query)
-            a=cursor.fetchall()[1][0]
-            print(a)
-            if a == password1:
+            a = cursor.fetchall()
+            b = a[0][0]
+            c = a[0][1]
+            if b == password1:
                 flag = 1
             db.commit()
             db.close()
-            # return flag
             if flag == 1:
                 print(f"Found")
+                return c
+            else:
+                return flag
     except Exception as e:
         print(f"Error processing request: {e}")
+        return (f"Error processing request: {e}")
