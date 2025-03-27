@@ -1,8 +1,11 @@
 import mysql.connector as mc
+import os
 
 def showBookDetails():
+    val1 = os.environ['dbUser']
+    val2 = os.environ['dbPwd']
     try:
-        db=mc.connect(host="localhost",user="root",password="lolwa")
+        db=mc.connect(host="localhost",user=val1,password=val2)
         if (db.is_connected()):
             print('DATABASE CONNECTED SUCCESSFULLY')
             cursor=db.cursor()
@@ -18,9 +21,12 @@ def showBookDetails():
     except Exception as e:
         print(f"Error processing request: {e}")
 
+
 def viewUserDetails():
+    val1 = os.environ['dbUser']
+    val2 = os.environ['dbPwd']
     try:
-        db=mc.connect(host="localhost",user="root",password="lolwa")
+        db=mc.connect(host="localhost",user=val1,password=val2)
         if (db.is_connected()):
             print('DATABASE CONNECTED SUCCESSFULLY')
             cursor=db.cursor()
