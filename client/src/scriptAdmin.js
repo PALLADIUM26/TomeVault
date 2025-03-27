@@ -23,12 +23,14 @@ function showBooks(){
 
 function prcesssViewUsers(data) {
     let tableHTML = '<table border="1"><tr>';
+    len = data.length;
     
     tableHTML += '<th>Username</th><th>Email</th><th>Password</th><th>Category</th></tr>';
     for (let i=0; i<len; i++){
         tableHTML += '<tr>';
-
-        tableHTML += '<td>'+data[i][0]+'</td><td>'+data[i][1]+'</td><td>'+data[i][2]+'</td><td>'+data[i][3]+'</td>';
+        for (let j=0; j<4; j++){
+            tableHTML += '<td>'+data[i][j]+'</td>';
+        }
         tableHTML += '</tr>';
     }
     tableHTML += '</table>';
@@ -45,11 +47,7 @@ function viewUsers(){
         body: JSON.stringify(),
     })
     .then(response => response.json()) // Assuming your Python backend returns JSON
-    .then(responseData => {        
-        // len = responseData.message.length;
-        // for (let i=0; i<len; i++){
-        //     console.log(responseData.message[i])
-        // }
+    .then(responseData => {
         prcesssViewUsers(responseData.message);
         alert(responseData.message); // Example: Display a message from the backend
     })
