@@ -4,6 +4,8 @@ import random
 from flask_cors import CORS
 import appAuth
 import appAdmin
+import appLibra
+import appStud
 
 
 app = Flask(__name__)
@@ -47,8 +49,10 @@ def login():
         data = request.get_json()
         username = data.get('username')
         password1 = data.get('password1')
-        appAuth.search(username, password1)
-        return jsonify({'message': 'Signed In'})
+        t = appAuth.search(username, password1)
+        print(t)
+        # return jsonify({'message': 'Signed In'})
+        return jsonify({'message': t})
     except Exception as e:
         print(f"Error processing request: {e}")
         return jsonify({'error': str(e), 'message':'An error occurred on the server.'}), 500 #return an error code and message.
@@ -72,6 +76,19 @@ def viewUsers():
     except Exception as e:
         print(f"Error processing request: {e}")
         return jsonify({'error': str(e), 'message':'An error occurred on the server.'}), 500 #return an error code and message.
+
+
+@app.route('/searchBooks', methods=['POST'])
+def searchBooks():
+    try:
+        data = request.get_json()
+        # username = data.get('username')
+        bookKey = data.get('bookKey')
+        data2 = appLibra.searchBooks(bookKey)
+        return jsonify({'message': data2})
+    except Exception as e:
+        print(f"Error processing request: {e}")
+        return jsonify({'error': str(e), 'message':'An error occurred on the server.'}), 500
 
 
 if __name__ == '__main__':
