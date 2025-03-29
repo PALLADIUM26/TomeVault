@@ -23,14 +23,15 @@ function processLogin(username, password1){
     .then(response => response.json()) // Assuming your Python backend returns JSON
     .then(responseData => {
         console.log('Success:', responseData);
+        
         // Handle the response from the Python backend (e.g., display a message)
         alert(responseData.message); // Example: Display a message from the backend
         if(responseData.message == 'a')
-            location.href = "homeAdmin.html";
+            location.replace("homeAdmin.html?"+username);
         else if(responseData.message == 'l')
-            location.href = "homeLibra.html";
+            location.replace("homeLibra.html?"+username);
         else if(responseData.message == 's')
-            location.href = "homeStud.html";
+            location.replace("homeStud.html?"+username);
     })
     .catch((error) => {
         console.error('Error:', error);
@@ -54,10 +55,10 @@ function register() {
     else if(document.getElementById('a').checked)
         category = document.getElementById('a').value;
 
-    window.onload = function(){
-        const email = document.getElementById("email").value;
-        localStorage.setItem("email",email);
-    }
+    // window.onload = function(){
+    //     const email = document.getElementById("email").value;
+    //     localStorage.setItem("email",email);
+    // }
     if(password1 == password2) {
         processRegister(username, email, password1, category);
     } else {
@@ -107,7 +108,6 @@ function verify(){
     // const og_otp = 54321;
     var link = window.location.href;
     link = link.replace("verify.html?","");
-    // document.write(link);
     arr = link.split("/");
     email = arr[arr.length-1];
     

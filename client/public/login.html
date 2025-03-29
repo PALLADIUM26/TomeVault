@@ -15,6 +15,12 @@
         <button type="reset">Reset</button>
         <button type="button" onclick="login()">Log In</button>
     </form>
+    <script>
+        window.onload = function(){
+        const email = document.getElementById("username").value;
+        localStorage.setItem("username",username);
+    }
+    </script>
 
     <!-- <script src="../script.js"></script> -->
     <script src="../src/scriptAuth.js"></script>
