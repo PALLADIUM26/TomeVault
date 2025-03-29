@@ -125,6 +125,18 @@ def showBorrows():
         print(f"Error processing request: {e}")
         return jsonify({'error': str(e), 'message':'An error occurred on the server.'}), 500
 
+@app.route('/becomeMember', methods=['POST'])
+def becomeMember():
+    try:
+        data = request.get_json()
+        username = data.get('username')
+        print(username)
+        data2 = appStud.becomeMember(username)
+        return jsonify({'message': data2})
+    except Exception as e:
+        print(f"Error processing request: {e}")
+        return jsonify({'error': str(e), 'message':'An error occurred on the server.'}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)
 
