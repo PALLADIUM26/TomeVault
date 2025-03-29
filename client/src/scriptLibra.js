@@ -2,7 +2,15 @@ function searchBooks(){
     location.href = "pageLibra1.html";
 }
 
-function prcesssSearchBooks(data) {
+function issueBooks(){
+    location.href = "pageLibra3.html"
+}
+
+function addMember(){
+    location.href = "pageLibra2.html"
+}
+
+function processSearchBooks(data) {
     let tableHTML = '<table border="1"><tr>';
     len = data.length;
     
@@ -45,38 +53,55 @@ function searchBooks2(){
 }
 
 
-function prcesssViewUsers(data) {
-    let tableHTML = '<table border="1"><tr>';
-    
-    tableHTML += '<th>Username</th><th>Email</th><th>Password</th><th>Category</th></tr>';
-    for (let i=0; i<len; i++){
-        tableHTML += '<tr>';
-        for (let j=0; j<4; j++){
-            tableHTML += '<td>'+data[i][j]+'</td>';
-        }
-        tableHTML += '</tr>';
-    }
-    tableHTML += '</table>';
+function issueBooks2(){
+    const sid = document.getElementById('sid').value;
+    const isbn = document.getElementById('isbn').value;
+    const data = {
+        sid: sid,
+        isbn: isbn,
+    };
 
-    document.body.innerHTML += tableHTML;
-}
-
-
-function viewUsers(){
-    fetch('http://127.0.0.1:5000/viewUsers', { // Replace '/submit' with your Python backend endpoint
+    fetch('http://127.0.0.1:5000/issueBooks', { // Replace '/submit' with your Python backend endpoint
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(),
+        body: JSON.stringify(data),
     })
     .then(response => response.json()) // Assuming your Python backend returns JSON
     .then(responseData => {
-        prcesssViewUsers(responseData.message);
+        console.log('Success:', responseData.message);
+        alert(responseData.message); // Example: Display a message from the backend
+        if (responseData.message == -1)
+        alert("cannot add more books");
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert("An error occurred. See console for details."); //Alert the user of an error.
+    });
+}
+
+
+function addMember2(){
+    const sid = document.getElementById('sid').value;
+    const data = {
+        sid: sid,
+    };
+
+    fetch('http://127.0.0.1:5000/addMember', { // Replace '/submit' with your Python backend endpoint
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json()) // Assuming your Python backend returns JSON
+    .then(responseData => {
+        console.log('Success:', responseData.message);
         alert(responseData.message); // Example: Display a message from the backend
     })
     .catch((error) => {
         console.error('Error:', error);
         alert("An error occurred. See console for details."); //Alert the user of an error.
-    });    
+    });
 }
