@@ -82,25 +82,28 @@ function processRegister(username, email, password1, category){
         og_otp: og_otp,
         category: category,
     };
-    fetch('http://127.0.0.1:5000/register', { // Replace '/submit' with your Python backend endpoint
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json()) // Assuming your Python backend returns JSON
-    .then(responseData => {
-        console.log('Success:', responseData);
-        // Handle the response from the Python backend (e.g., display a message)
-        alert(responseData.message); // Example: Display a message from the backend
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        alert("An error occurred. See console for details."); //Alert the user of an error.
-    });
-    // location.href = "verify.html";
-    location.replace("verify.html?"+email);
+    try{
+        fetch('http://127.0.0.1:5000/register', { // Replace '/submit' with your Python backend endpoint
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json()) // Assuming your Python backend returns JSON
+        .then(responseData => {
+            console.log('Success:', responseData);
+            // Handle the response from the Python backend (e.g., display a message)
+            alert(responseData.message); // Example: Display a message from the backend
+            location.replace("verify.html?"+email);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert("An error occurred. See console for details."); //Alert the user of an error.
+        });
+    } catch (error) {
+        console.error("Registration error:", error);
+    }
 }
 
 
