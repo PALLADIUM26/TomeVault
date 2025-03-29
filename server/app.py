@@ -90,6 +90,40 @@ def searchBooks():
         print(f"Error processing request: {e}")
         return jsonify({'error': str(e), 'message':'An error occurred on the server.'}), 500
 
+@app.route('/issueBooks', methods=['POST'])
+def issueBooks():
+    try:
+        data = request.get_json()
+        sid = data.get('sid')
+        isbn = data.get('isbn')
+        data2 = appLibra.issueBooks(sid, isbn)
+        return jsonify({'message': data2})
+    except Exception as e:
+        print(f"Error processing request: {e}")
+        return jsonify({'error': str(e), 'message':'An error occurred on the server.'}), 500
+
+@app.route('/addMember', methods=['POST'])
+def addMember():
+    try:
+        data = request.get_json()
+        sid = data.get('sid')
+        data2 = appLibra.addMember(sid)
+        return jsonify({'message': data2})
+    except Exception as e:
+        print(f"Error processing request: {e}")
+        return jsonify({'error': str(e), 'message':'An error occurred on the server.'}), 500
+
+@app.route('/showBorrows', methods=['POST'])
+def showBorrows():
+    try:
+        data = request.get_json()
+        username = data.get('username')
+        print(username)
+        data2 = appStud.showBorrows(username)
+        return jsonify({'message': data2})
+    except Exception as e:
+        print(f"Error processing request: {e}")
+        return jsonify({'error': str(e), 'message':'An error occurred on the server.'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
