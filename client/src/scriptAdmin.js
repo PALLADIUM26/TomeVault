@@ -21,7 +21,7 @@ function showBooks(){
 }
 
 
-function prcesssViewUsers(data) {
+function processViewUsers(data) {
     let tableHTML = '<table border="1"><tr>';
     len = data.length;
     
@@ -48,7 +48,7 @@ function viewUsers(){
     })
     .then(response => response.json()) // Assuming your Python backend returns JSON
     .then(responseData => {
-        prcesssViewUsers(responseData.message);
+        processViewUsers(responseData.message);
         alert(responseData.message); // Example: Display a message from the backend
     })
     .catch((error) => {
