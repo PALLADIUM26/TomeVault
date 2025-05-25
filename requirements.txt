@@ -1,0 +1,6 @@
+Flask-Cors
+Flask
+requests
+jsonify
+mysql-connector-python
+secure-smtplib
